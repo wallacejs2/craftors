@@ -86,18 +86,18 @@ const outputPlaceholder = document.getElementById('output-placeholder') as HTMLE
 const previewPane = document.getElementById('preview-pane') as HTMLIFrameElement;
 
 // Sidebar elements
-const designSidebar = document.getElementById('design-sidebar') as HTMLElement;
-const mergeFieldsSidebar = document.getElementById('merge-fields-sidebar') as HTMLElement;
-const sidebarOverlay = document.getElementById('sidebar-overlay') as HTMLElement;
+const designSidebar = document.getElementById('design-sidebar');
+const mergeFieldsSidebar = document.getElementById('merge-fields-sidebar');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
 
 // Toggle buttons
-const designToggle = document.getElementById('floating-design-btn') as HTMLButtonElement;
-const mergeFieldsToggle = document.getElementById('merge-fields-toggle') as HTMLButtonElement;
-const floatingMergeBtn = document.getElementById('floating-merge-btn') as HTMLButtonElement;
+const designToggle = document.getElementById('floating-design-btn');
+const mergeFieldsToggle = document.getElementById('merge-fields-toggle');
+const floatingMergeBtn = document.getElementById('floating-merge-btn');
 
 // Close buttons
-const closeDesignSidebar = document.getElementById('close-design-sidebar') as HTMLButtonElement;
-const closeMergeSidebar = document.getElementById('close-sidebar') as HTMLButtonElement;
+const closeDesignSidebar = document.getElementById('close-design-sidebar');
+const closeMergeSidebar = document.getElementById('close-sidebar');
 
 // Dynamic Section Elements
 const offersContainer = document.getElementById('offers-container') as HTMLElement;
@@ -447,33 +447,33 @@ const generateEmailHtml = (data: EmailData): string => {
 
 // Sidebar functionality
 const openDesignSidebar = (): void => {
-  designSidebar.classList.add('open');
-  mergeFieldsSidebar.classList.remove('open');
-  sidebarOverlay.classList.add('visible');
+  designSidebar?.classList.add('open');
+  mergeFieldsSidebar?.classList.remove('open');
+  sidebarOverlay?.classList.add('visible');
   document.body.style.overflow = 'hidden';
 };
 
 const closeSidebarFunc = (): void => {
-  designSidebar.classList.remove('open');
-  mergeFieldsSidebar.classList.remove('open');
-  sidebarOverlay.classList.remove('visible');
+  designSidebar?.classList.remove('open');
+  mergeFieldsSidebar?.classList.remove('open');
+  sidebarOverlay?.classList.remove('visible');
   document.body.style.overflow = '';
 };
 
 const openMergeSidebar = (): void => {
-  mergeFieldsSidebar.classList.add('open');
-  designSidebar.classList.remove('open');
-  sidebarOverlay.classList.add('visible');
+  mergeFieldsSidebar?.classList.add('open');
+  designSidebar?.classList.remove('open');
+  sidebarOverlay?.classList.add('visible');
   document.body.style.overflow = 'hidden';
 };
 
 // Event listeners for sidebar toggles
-designToggle.addEventListener('click', openDesignSidebar);
-mergeFieldsToggle.addEventListener('click', openMergeSidebar);
-floatingMergeBtn.addEventListener('click', openMergeSidebar);
-closeDesignSidebar.addEventListener('click', closeSidebarFunc);
-closeMergeSidebar.addEventListener('click', closeSidebarFunc);
-sidebarOverlay.addEventListener('click', closeSidebarFunc);
+designToggle?.addEventListener('click', openDesignSidebar);
+mergeFieldsToggle?.addEventListener('click', openMergeSidebar);
+floatingMergeBtn?.addEventListener('click', openMergeSidebar);
+closeDesignSidebar?.addEventListener('click', closeSidebarFunc);
+closeMergeSidebar?.addEventListener('click', closeSidebarFunc);
+sidebarOverlay?.addEventListener('click', closeSidebarFunc);
 
 // Design option handlers
 const fontSelect = document.getElementById('design-font-family') as HTMLSelectElement;
