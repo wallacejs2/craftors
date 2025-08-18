@@ -1,4 +1,5 @@
 
+
 :root {
   /* Apple Design System Colors */
   --background-primary: #ffffff;
@@ -276,12 +277,6 @@ textarea.form-control {
   min-height: 120px;
 }
 
-input[type="color"] {
-  padding: 8px;
-  height: 44px;
-  cursor: pointer;
-}
-
 input[type="file"] {
   padding: 12px;
   cursor: pointer;
@@ -303,10 +298,81 @@ input[type="file"]::file-selector-button:hover {
   background: var(--system-blue-dark);
 }
 
+/* Custom Color Picker Swatch */
+.color-input-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.color-input-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+}
+
+.color-swatch-display {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--background-primary);
+  box-shadow: 0 0 0 1px var(--separator-primary), var(--shadow-sm);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* Clicks pass through to the hidden input */
+  transition: transform var(--transition-base);
+}
+
+.color-input-container:hover .color-swatch-display {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
 /* Grid System */
 .grid {
   display: grid;
   gap: var(--spacing-lg);
+}
+
+/* Default form-group style inside a grid */
+.grid .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.grid .form-group .form-label {
+  margin-bottom: 0; /* Use gap for spacing instead of margin */
+}
+
+/* Specific styles for form groups containing a color picker to be side-by-side */
+.form-group:has(.color-input-container) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.form-group:has(.color-input-container) .form-label {
+  margin-bottom: 0; /* Use gap for spacing instead of margin */
+}
+
+.form-group-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.form-group-inline > .form-group {
+  margin-bottom: 0;
 }
 
 .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
@@ -434,12 +500,12 @@ input[type="file"]::file-selector-button:hover {
 
 .color-scheme-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-md);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
 }
 
 .color-scheme-option {
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   border: 2px solid var(--separator-secondary);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -790,7 +856,7 @@ input[type="file"]::file-selector-button:hover {
   .grid-cols-3 { grid-template-columns: 1fr; }
   .design-sidebar { width: 90vw; left: -90vw; }
   .merge-fields-sidebar { width: 90vw; right: -90vw; }
-  .color-scheme-grid { grid-template-columns: 1fr; }
+  .color-scheme-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* Utility Classes */

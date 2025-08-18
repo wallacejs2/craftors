@@ -1,4 +1,5 @@
 
+
 /**
  * @license
  * Copyright Wallace, Jayden
@@ -482,6 +483,31 @@ fontSelect?.addEventListener('change', (e) => {
   console.log('Font updated:', designSettings.fontFamily);
 });
 
+// Color Picker Functionality
+const setupColorPicker = (container: HTMLElement | Document) => {
+    container.querySelectorAll('.color-input-container').forEach(wrapper => {
+        const colorInput = wrapper.querySelector('input[type="color"]') as HTMLInputElement;
+        const swatch = wrapper.querySelector('.color-swatch-display') as HTMLElement;
+        if (colorInput && swatch) {
+            // Sync swatch color with input value
+            swatch.style.backgroundColor = colorInput.value;
+            // Add listener to update swatch on color change
+            colorInput.addEventListener('input', () => {
+                swatch.style.backgroundColor = colorInput.value;
+            });
+        }
+    });
+};
+
+const updateColorInput = (id: string, color: string) => {
+    const input = document.getElementById(id) as HTMLInputElement | null;
+    if (input) {
+        input.value = color;
+        // Dispatch an 'input' event to trigger our custom listener to update the swatch
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+};
+
 // Color scheme selection
 document.querySelectorAll('.color-scheme-option').forEach(option => {
   option.addEventListener('click', () => {
@@ -493,20 +519,21 @@ document.querySelectorAll('.color-scheme-option').forEach(option => {
 
     const colors = schemeColors[schemeName];
     if (colors) {
-      (document.getElementById('hero_message_bg_color') as HTMLInputElement).value = colors.bg;
-      (document.getElementById('body_bg_color') as HTMLInputElement).value = colors.bg;
-      (document.getElementById('cta_color') as HTMLInputElement).value = colors.primary;
-      (document.getElementById('cta_text_color') as HTMLInputElement).value = getContrastColor(colors.primary);
+        updateColorInput('hero_message_bg_color', colors.bg);
+        updateColorInput('body_bg_color', colors.bg);
+        updateColorInput('cta_color', colors.primary);
+        updateColorInput('cta_text_color', getContrastColor(colors.primary));
+        
+        document.querySelectorAll<HTMLInputElement>('input[id^="offer_cta_color_"]').forEach(input => {
+            updateColorInput(input.id, colors.primary);
+        });
+        document.querySelectorAll<HTMLInputElement>('input[id^="offer_cta_text_color_"]').forEach(input => {
+            updateColorInput(input.id, getContrastColor(colors.primary));
+        });
 
-      document.querySelectorAll<HTMLInputElement>('input[id^="offer_cta_color_"]').forEach(input => {
-        input.value = colors.primary;
-      });
-      document.querySelectorAll<HTMLInputElement>('input[id^="offer_cta_text_color_"]').forEach(input => {
-        input.value = getContrastColor(colors.primary);
-      });
-      (document.getElementById('footer_bg_color') as HTMLInputElement).value = colors.bg;
-      (document.getElementById('footer_cta_bg_color') as HTMLInputElement).value = colors.primary;
-      (document.getElementById('footer_cta_text_color') as HTMLInputElement).value = getContrastColor(colors.primary);
+        updateColorInput('footer_bg_color', colors.bg);
+        updateColorInput('footer_cta_bg_color', colors.primary);
+        updateColorInput('footer_cta_text_color', getContrastColor(colors.primary));
     }
     console.log('Color scheme updated:', designSettings.colorScheme);
   });
@@ -625,14 +652,20 @@ const createOfferBlockHtml = (index: number): string => `
             <input type="text" id="offer_cta_link_${index}" name="offer_cta_link_${index}" placeholder="https://example.com/specials" class="form-control"/>
           </div>
         </div>
-        <div class="grid grid-cols-2">
+        <div class="form-group form-group-inline">
           <div class="form-group">
-            <label for="offer_cta_color_${index}" class="form-label">CTA BG Color</label>
-            <input type="color" id="offer_cta_color_${index}" name="offer_cta_color_${index}" value="#4f46e5" class="form-control">
+            <label for="offer_cta_color_${index}" class="form-label">CTA BG</label>
+            <div class="color-input-container">
+              <input type="color" id="offer_cta_color_${index}" name="offer_cta_color_${index}" value="#4f46e5" class="color-input-hidden">
+              <div class="color-swatch-display" style="background-color: #4f46e5;"></div>
+            </div>
           </div>
           <div class="form-group">
-            <label for="offer_cta_text_color_${index}" class="form-label">CTA Text Color</label>
-            <input type="color" id="offer_cta_text_color_${index}" name="offer_cta_text_color_${index}" value="#ffffff" class="form-control">
+            <label for="offer_cta_text_color_${index}" class="form-label">CTA Text</label>
+            <div class="color-input-container">
+              <input type="color" id="offer_cta_text_color_${index}" name="offer_cta_text_color_${index}" value="#ffffff" class="color-input-hidden">
+              <div class="color-swatch-display" style="background-color: #ffffff;"></div>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -647,22 +680,27 @@ const addOffer = () => {
     if (offersContainer.children.length >= 5) return;
 
     const newOfferHtml = createOfferBlockHtml(nextOfferIndex);
-    offersContainer.insertAdjacentHTML('beforeend', newOfferHtml);
-    setupOfferImagePreview(nextOfferIndex);
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = newOfferHtml;
+    const newOfferElement = tempDiv.firstElementChild as HTMLElement;
 
-    const currentSchemeName = document.querySelector('.color-scheme-option.selected')?.getAttribute('data-scheme') || 'modern';
-    const colors = schemeColors[currentSchemeName];
-    if (colors) {
-        const offerCtaColor = document.getElementById(`offer_cta_color_${nextOfferIndex}`) as HTMLInputElement | null;
-        if (offerCtaColor) offerCtaColor.value = colors.primary;
-        const offerCtaTextColor = document.getElementById(`offer_cta_text_color_${nextOfferIndex}`) as HTMLInputElement | null;
-        if (offerCtaTextColor) offerCtaTextColor.value = getContrastColor(colors.primary);
-    }
+    if (newOfferElement) {
+        offersContainer.appendChild(newOfferElement);
+        setupOfferImagePreview(nextOfferIndex);
+        setupColorPicker(newOfferElement);
 
-    nextOfferIndex++;
-    if (offersContainer.children.length >= 5) {
-        addOfferBtn.disabled = true;
-        addOfferBtn.textContent = 'Maximum Offers Reached';
+        const currentSchemeName = document.querySelector('.color-scheme-option.selected')?.getAttribute('data-scheme') || 'modern';
+        const colors = schemeColors[currentSchemeName];
+        if (colors) {
+            updateColorInput(`offer_cta_color_${nextOfferIndex}`, colors.primary);
+            updateColorInput(`offer_cta_text_color_${nextOfferIndex}`, getContrastColor(colors.primary));
+        }
+
+        nextOfferIndex++;
+        if (offersContainer.children.length >= 5) {
+            addOfferBtn.disabled = true;
+            addOfferBtn.textContent = 'Maximum Offers Reached';
+        }
     }
 };
 
@@ -734,9 +772,13 @@ footerCtasContainer.addEventListener('click', (e) => {
     }
 });
 
-// Initialize form with one of each block
-addOffer();
-addFooterCta();
+// Initialize form
+const initializeForm = () => {
+    addOffer();
+    addFooterCta();
+    setupColorPicker(document);
+};
+initializeForm();
 
 
 // Form submission with design settings

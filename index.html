@@ -39,15 +39,21 @@
               </div>
               <div class="grid grid-cols-3">
                 <div class="form-group">
-                  <label for="hero_message_bg_color" class="form-label">Message BG Color</label>
-                  <input type="color" id="hero_message_bg_color" name="hero_message_bg_color" value="#ffffff" class="form-control">
+                  <label for="hero_message_bg_color" class="form-label">Message BG</label>
+                  <div class="color-input-container">
+                    <input type="color" id="hero_message_bg_color" name="hero_message_bg_color" value="#ffffff" class="color-input-hidden">
+                    <div class="color-swatch-display" style="background-color: #ffffff;"></div>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="hero_message_color" class="form-label">Message Color</label>
-                  <input type="color" id="hero_message_color" name="hero_message_color" value="#1d1d1f" class="form-control">
+                  <label for="hero_message_color" class="form-label">Message Text</label>
+                  <div class="color-input-container">
+                    <input type="color" id="hero_message_color" name="hero_message_color" value="#1d1d1f" class="color-input-hidden">
+                    <div class="color-swatch-display" style="background-color: #1d1d1f;"></div>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="hero_message_font_size" class="form-label">Message Font Size (px)</label>
+                  <label for="hero_message_font_size" class="form-label">Font Size (px)</label>
                   <input type="number" id="hero_message_font_size" name="hero_message_font_size" value="24" min="12" max="72" class="form-control">
                 </div>
               </div>
@@ -65,8 +71,11 @@
               </div>
 
               <div class="form-group">
-                <label for="body_bg_color" class="form-label">Email Body Background Color</label>
-                <input type="color" id="body_bg_color" name="body_bg_color" value="#ffffff" class="form-control">
+                <label for="body_bg_color" class="form-label">Body Background</label>
+                <div class="color-input-container" style="margin: 0;">
+                  <input type="color" id="body_bg_color" name="body_bg_color" value="#ffffff" class="color-input-hidden">
+                  <div class="color-swatch-display" style="background-color: #ffffff;"></div>
+                </div>
               </div>
 
               <div class="grid grid-cols-2">
@@ -92,14 +101,20 @@
                 </div>
               </div>
               
-              <div class="grid grid-cols-2">
+              <div class="form-group form-group-inline">
                 <div class="form-group">
-                  <label for="cta_color" class="form-label">Main CTA BG Color</label>
-                  <input type="color" id="cta_color" name="cta_color" value="#4f46e5" class="form-control">
+                  <label for="cta_color" class="form-label">Main CTA BG</label>
+                  <div class="color-input-container">
+                    <input type="color" id="cta_color" name="cta_color" value="#4f46e5" class="color-input-hidden">
+                    <div class="color-swatch-display" style="background-color: #4f46e5;"></div>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="cta_text_color" class="form-label">Main CTA Text Color</label>
-                  <input type="color" id="cta_text_color" name="cta_text_color" value="#ffffff" class="form-control">
+                  <label for="cta_text_color" class="form-label">Main CTA Text</label>
+                  <div class="color-input-container">
+                    <input type="color" id="cta_text_color" name="cta_text_color" value="#ffffff" class="color-input-hidden">
+                    <div class="color-swatch-display" style="background-color: #ffffff;"></div>
+                  </div>
                 </div>
               </div>
 
@@ -120,18 +135,29 @@
                 <p class="text-lg" style="color: var(--label-secondary); margin-bottom: var(--spacing-lg);">
                   These links will appear at the bottom of the email, useful for secondary actions.
                 </p>
-                <div class="grid grid-cols-3 mb-6">
+                <div class="grid grid-cols-2 mb-6">
                   <div class="form-group">
-                    <label for="footer_bg_color" class="form-label">Section Background</label>
-                    <input type="color" id="footer_bg_color" name="footer_bg_color" value="#ffffff" class="form-control">
+                    <label for="footer_bg_color" class="form-label">Section BG</label>
+                    <div class="color-input-container">
+                      <input type="color" id="footer_bg_color" name="footer_bg_color" value="#ffffff" class="color-input-hidden">
+                      <div class="color-swatch-display" style="background-color: #ffffff;"></div>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="footer_cta_bg_color" class="form-label">Button BG Color</label>
-                    <input type="color" id="footer_cta_bg_color" name="footer_cta_bg_color" value="#4f46e5" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="footer_cta_text_color" class="form-label">Button Text Color</label>
-                    <input type="color" id="footer_cta_text_color" name="footer_cta_text_color" value="#ffffff" class="form-control">
+                  <div class="form-group-inline">
+                    <div class="form-group">
+                      <label for="footer_cta_bg_color" class="form-label">Button BG</label>
+                      <div class="color-input-container">
+                        <input type="color" id="footer_cta_bg_color" name="footer_cta_bg_color" value="#4f46e5" class="color-input-hidden">
+                        <div class="color-swatch-display" style="background-color: #4f46e5;"></div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="footer_cta_text_color" class="form-label">Button Text</label>
+                      <div class="color-input-container">
+                        <input type="color" id="footer_cta_text_color" name="footer_cta_text_color" value="#ffffff" class="color-input-hidden">
+                        <div class="color-swatch-display" style="background-color: #ffffff;"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div id="footer-ctas-container">
@@ -235,7 +261,6 @@
                 <div class="color-dot" style="background: #1d1d1f;"></div>
               </div>
               <div class="text-sm" style="font-weight: 590;">Modern Blue</div>
-              <div class="text-xs" style="color: var(--label-secondary);">Clean and professional</div>
             </div>
             
             <div class="color-scheme-option" data-scheme="warm">
@@ -246,7 +271,6 @@
                 <div class="color-dot" style="background: #2d1810;"></div>
               </div>
               <div class="text-sm" style="font-weight: 590;">Warm Orange</div>
-              <div class="text-xs" style="color: var(--label-secondary);">Friendly and inviting</div>
             </div>
             
             <div class="color-scheme-option" data-scheme="elegant">
@@ -257,7 +281,6 @@
                 <div class="color-dot" style="background: #1e293b;"></div>
               </div>
               <div class="text-sm" style="font-weight: 590;">Elegant Purple</div>
-              <div class="text-xs" style="color: var(--label-secondary);">Sophisticated and refined</div>
             </div>
             
             <div class="color-scheme-option" data-scheme="nature">
@@ -268,7 +291,6 @@
                 <div class="color-dot" style="background: #14532d;"></div>
               </div>
               <div class="text-sm" style="font-weight: 590;">Nature Green</div>
-              <div class="text-xs" style="color: var(--label-secondary);">Fresh and natural</div>
             </div>
             
             <div class="color-scheme-option" data-scheme="corporate">
@@ -279,7 +301,6 @@
                 <div class="color-dot" style="background: #111827;"></div>
               </div>
               <div class="text-sm" style="font-weight: 590;">Corporate Gray</div>
-              <div class="text-xs" style="color: var(--label-secondary);">Professional and trustworthy</div>
             </div>
             
             <div class="color-scheme-option" data-scheme="vibrant">
@@ -290,7 +311,6 @@
                 <div class="color-dot" style="background: #831843;"></div>
               </div>
               <div class="text-sm" style="font-weight: 590;">Vibrant Pink</div>
-              <div class="text-xs" style="color: var(--label-secondary);">Bold and energetic</div>
             </div>
           </div>
         </div>
