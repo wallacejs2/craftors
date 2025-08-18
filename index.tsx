@@ -1,5 +1,4 @@
 
-
 /**
  * @license
  * Copyright Wallace, Jayden
@@ -411,7 +410,7 @@ const generateEmailHtml = (data: EmailData): string => {
                                 <td align="center">
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                         <tr>
-                                            <td>
+                                            <td align="center">
                                               ${renderButton(ctaText, ctaLink, mainButtonColor, buttonStyle, mainBodyBg, { width: '200px', height: '50px', fontSize: '16px' }, ctaTextColor)}
                                             </td>
                                         </tr>
@@ -743,15 +742,19 @@ addFooterCta();
 // Form submission with design settings
 emailForm.addEventListener('submit', async (e: Event) => {
   e.preventDefault();
-  
-  // Show loading state
+
   const btnText = generateBtn.querySelector('.btn-text') as HTMLElement;
   const spinner = generateBtn.querySelector('.spinner') as HTMLElement;
-  
+  const checkmark = generateBtn.querySelector('.checkmark') as HTMLElement;
+
+  // Start loading state
   generateBtn.disabled = true;
-  btnText.style.display = 'none';
+  btnText.textContent = 'Generating Template...';
   spinner.classList.remove('hidden');
-  
+  checkmark.classList.add('hidden');
+  generateBtn.classList.remove('btn-success');
+
+
   try {
     const formData = new FormData(emailForm);
     const emailStyle = formData.get('email-style') as string || 'modern';
@@ -845,28 +848,37 @@ emailForm.addEventListener('submit', async (e: Event) => {
     setTimeout(() => {
       outputPlaceholder.style.display = 'none';
       outputContainer.style.display = 'grid';
-      
-      // Reset button
-      generateBtn.disabled = false;
-      btnText.style.display = 'block';
-      spinner.classList.add('hidden');
-      
+
       // Generate email with design settings
       const emailHtml = generateEmailHtml(emailData);
-      
+
       const codeBlock = document.getElementById('code-block') as HTMLElement;
-      
+
       codeBlock.textContent = emailHtml;
-      
+
       // Set up the onload event to resize the iframe AFTER the content has been loaded
       previewPane.onload = () => {
         resizeDesktopPreview();
         // Clear the onload handler to prevent it from firing again on subsequent loads
-        previewPane.onload = null; 
+        previewPane.onload = null;
       };
 
       previewPane.srcdoc = emailHtml; // This triggers the load event
-      
+
+      // Success state
+      spinner.classList.add('hidden');
+      generateBtn.classList.add('btn-success');
+      checkmark.classList.remove('hidden');
+      btnText.textContent = 'Complete';
+
+      // Revert button after a delay
+      setTimeout(() => {
+        generateBtn.disabled = false;
+        generateBtn.classList.remove('btn-success');
+        checkmark.classList.add('hidden');
+        btnText.textContent = 'Generate Template';
+      }, 2000);
+
       console.log('Generated with settings:', designSettings);
     }, 2000);
 
@@ -875,10 +887,13 @@ emailForm.addEventListener('submit', async (e: Event) => {
     outputPlaceholder.innerHTML = `<p>An error occurred. Please check the console for details and try again.</p>`;
     outputPlaceholder.style.display = 'flex';
     outputContainer.style.display = 'none';
-  } finally {
+
+    // Reset button on error
     generateBtn.disabled = false;
-    btnText.style.display = 'block';
+    btnText.textContent = 'Generate Template';
     spinner.classList.add('hidden');
+    checkmark.classList.add('hidden');
+    generateBtn.classList.remove('btn-success');
   }
 });
 
